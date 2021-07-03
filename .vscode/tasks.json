@@ -15,7 +15,7 @@
         {
             "type": "shell",
             "label": "build",
-            "command": "./build.sh",
+            "command": "cd ${workspaceRoot} && ./build.sh",
             "args": [
 
             ]
@@ -35,7 +35,7 @@
             "label": "Build",
             "dependsOrder": "sequence",  // 按列出的顺序执行任务依赖项
             "dependsOn": [
-                "cmake",
+                "build",
                 "make"
             ]
         }

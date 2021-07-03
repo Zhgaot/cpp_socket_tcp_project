@@ -73,15 +73,15 @@ CMakeFiles/mySocket_exe.dir/main.cpp.o: CMakeFiles/mySocket_exe.dir/flags.make
 CMakeFiles/mySocket_exe.dir/main.cpp.o: ../main.cpp
 CMakeFiles/mySocket_exe.dir/main.cpp.o: CMakeFiles/mySocket_exe.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/root/CppSpace/cpp_socket_tcp_project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/mySocket_exe.dir/main.cpp.o"
-	/usr/local/gcc-11.1.0-install/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mySocket_exe.dir/main.cpp.o -MF CMakeFiles/mySocket_exe.dir/main.cpp.o.d -o CMakeFiles/mySocket_exe.dir/main.cpp.o -c /root/CppSpace/cpp_socket_tcp_project/main.cpp
+	/usr/local/gcc-11.1.0-install/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mySocket_exe.dir/main.cpp.o -MF CMakeFiles/mySocket_exe.dir/main.cpp.o.d -o CMakeFiles/mySocket_exe.dir/main.cpp.o -c /root/CppSpace/cpp_socket_tcp_project/main.cpp
 
 CMakeFiles/mySocket_exe.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mySocket_exe.dir/main.cpp.i"
-	/usr/local/gcc-11.1.0-install/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/CppSpace/cpp_socket_tcp_project/main.cpp > CMakeFiles/mySocket_exe.dir/main.cpp.i
+	/usr/local/gcc-11.1.0-install/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /root/CppSpace/cpp_socket_tcp_project/main.cpp > CMakeFiles/mySocket_exe.dir/main.cpp.i
 
 CMakeFiles/mySocket_exe.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mySocket_exe.dir/main.cpp.s"
-	/usr/local/gcc-11.1.0-install/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/CppSpace/cpp_socket_tcp_project/main.cpp -o CMakeFiles/mySocket_exe.dir/main.cpp.s
+	/usr/local/gcc-11.1.0-install/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /root/CppSpace/cpp_socket_tcp_project/main.cpp -o CMakeFiles/mySocket_exe.dir/main.cpp.s
 
 # Object files for target mySocket_exe
 mySocket_exe_OBJECTS = \

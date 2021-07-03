@@ -1,4 +1,4 @@
-set(CMAKE_CXX_COMPILER "/usr/local/gcc-11.1.0-install/bin/c++")
+set(CMAKE_CXX_COMPILER "/usr/local/gcc-11.1.0-install/bin/g++")
 set(CMAKE_CXX_COMPILER_ARG1 "")
 set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_COMPILER_VERSION "11.1.0")

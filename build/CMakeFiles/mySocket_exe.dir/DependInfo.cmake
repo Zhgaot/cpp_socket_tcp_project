@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/root/CppSpace/cpp_socket_tcp_project/main.cpp" "CMakeFiles/mySocket_exe.dir/main.cpp.o" "gcc" "CMakeFiles/mySocket_exe.dir/main.cpp.o.d"
+  "/root/CppSpace/cpp_socket_tcp_project/src/XTcp.cpp" "CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.o" "gcc" "CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.o.d"
   )
 
 # Targets to which this target links.

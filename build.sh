@@ -5,4 +5,5 @@ export GCC_ENV_DIR=$(which gcc)
 export GPP_ENV_DIR=$(which g++)
 
 # 执行构建
-cd build && cmake ..
+mkdir -p build
+cd build && cmake .. && make

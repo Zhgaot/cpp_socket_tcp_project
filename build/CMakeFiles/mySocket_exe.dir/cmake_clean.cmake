@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mySocket_exe.dir/main.cpp.o"
   "CMakeFiles/mySocket_exe.dir/main.cpp.o.d"
+  "CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.o"
+  "CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.o.d"
   "mySocket_exe"
   "mySocket_exe.pdb"
 )

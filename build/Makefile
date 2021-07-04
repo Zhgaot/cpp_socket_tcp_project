@@ -153,6 +153,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mySocket_exe.dir/build.make CMakeFiles/mySocket_exe.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/XTcp.o: src/XTcp.cpp.o
+.PHONY : src/XTcp.o
+
+# target to build an object file
+src/XTcp.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mySocket_exe.dir/build.make CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.o
+.PHONY : src/XTcp.cpp.o
+
+src/XTcp.i: src/XTcp.cpp.i
+.PHONY : src/XTcp.i
+
+# target to preprocess a source file
+src/XTcp.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mySocket_exe.dir/build.make CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.i
+.PHONY : src/XTcp.cpp.i
+
+src/XTcp.s: src/XTcp.cpp.s
+.PHONY : src/XTcp.s
+
+# target to generate assembly for a file
+src/XTcp.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mySocket_exe.dir/build.make CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.s
+.PHONY : src/XTcp.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -165,6 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... src/XTcp.o"
+	@echo "... src/XTcp.i"
+	@echo "... src/XTcp.s"
 .PHONY : help
 
 

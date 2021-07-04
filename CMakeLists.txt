@@ -12,6 +12,6 @@ set(CMAKE_BUILD_TYPE Debug)
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 
-add_executable(mySocket_exe main.cpp)
+add_executable(mySocket_exe main.cpp src/XTcp.cpp)
 
 target_link_libraries(mySocket_exe pthread)

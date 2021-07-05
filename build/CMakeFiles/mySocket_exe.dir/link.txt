@@ -1,1 +1,0 @@
-/usr/local/gcc-11.1.0-install/bin/g++  -Wall -std=c++11 -g -rdynamic CMakeFiles/mySocket_exe.dir/main.cpp.o CMakeFiles/mySocket_exe.dir/src/XTcp.cpp.o -o mySocket_exe  -lpthread 

@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
 	 * @param argv 第0个参数为“程序运行的全路径名”，从第1个参数开始为传入的参数(主要用于传入端口号)
 	*/
 
-	unsigned short port = 8080;  // 默认端口号为8080
+	unsigned short port = 8088;  // 默认端口号为8080
 	if (argc > 1) {
 		port = atoi(argv[1]);  // atoi()函数将数字格式的字符串转换为整数类型，需要引用头文件<stdlib.h>
 	}
@@ -124,6 +124,7 @@ int main(int argc, char* argv[]) {
 	// }
 
 	/* 循环接受连接(支持多个客户端同时连接到服务端)，并获取客户端的信息 */
+	cout<<"service start"<<endl;
 	while (true) {
 		XTcp client = server.accept_connection();
 		/* 创建一个线程专门用于客户端与服务端之间收发数据 */
@@ -131,7 +132,7 @@ int main(int argc, char* argv[]) {
 		thread cur_thread(&TcpRSThread::Main, std::ref(cur_rs_thread));
 		cur_thread.detach();
 	}
-
+	cout<<"service end"<<endl;
 	server.close_socket();
 
 	return 0;

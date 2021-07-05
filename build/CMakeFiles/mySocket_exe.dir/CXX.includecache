@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/root/CppSpace/cpp_socket_tcp_project/main.cpp
+windows.h
+-
+sys/types.h
+-
+sys/socket.h
+-
+unistd.h
+-
+arpa/inet.h
+-
+string.h
+-
+netinet/in.h
+-
+iostream
+-
+stdio.h
+-
+stdlib.h
+-
+string
+-
+thread
+-
+errno.h
+-
+

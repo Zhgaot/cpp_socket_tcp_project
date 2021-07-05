@@ -19,7 +19,7 @@
 #define INET_ADDRSTRLEN 16
 using namespace std;
 
-XTcp::XTcp() {
+XTcp::XTcp() : sock(-1), port(0) {
     /* 为了兼容windows下的使用，在XTcp类的构造函数内初始化动态链接库 */
 #ifdef WIN32  // 在Linux中无需初始化动态链接库
     static bool first = true;  // 首次初始化为true，也就是需要进行初始化
@@ -29,10 +29,18 @@ XTcp::XTcp() {
         first = false;
     }
 #endif
+}
 
-    /* 初始化成员属性 */
-    this->sock = -1;
-    this->port = 0;
+XTcp::XTcp(unsigned short e_port) : sock(-1), port(e_port) {
+    /* 为了兼容windows下的使用，在XTcp类的构造函数内初始化动态链接库 */
+#ifdef WIN32  // 在Linux中无需初始化动态链接库
+    static bool first = true;  // 首次初始化为true，也就是需要进行初始化
+    if (first == true) {
+        WSADATA ws;
+	    WSAStartup(MAKEWORD(2, 2), &ws);  // 2,2表示版本号
+        first = false;
+    }
+#endif
 }
 
 int XTcp::create_socket() {
@@ -47,7 +55,7 @@ int XTcp::create_socket() {
 		cout << "The file descriptor of socket is: " << this->sock << endl;  // 输出socket描述符
 }
 
-bool XTcp::name_socket(unsigned short port) {
+bool XTcp::name_socket() {
 	/* 万一外部没有创建socket，在这里也创建上 */
 	if (this->sock == -1)
 		this->create_socket();
@@ -138,4 +146,22 @@ int XTcp::send_msg(const char* buf, int send_size) {
 		sended_size += len;
 	}
 	return sended_size;
+}
+
+void XTcp::byteorder() {
+	/* 用于检查机器的字节序 */
+	union {
+		short value;
+		char union_bytes[sizeof(short)];
+	} test;
+	test.value = 0x0102;
+	if ((test.union_bytes[0] == 1) && (test.union_bytes[1] == 2)) {
+		cout << "big endian" << endl;
+	}
+	else if ((test.union_bytes[0] == 2) && (test.union_bytes[1] == 1)) {
+		cout << "little endian" << endl;
+	}
+	else {
+		cout << "unknow..." << endl;
+	}
 }

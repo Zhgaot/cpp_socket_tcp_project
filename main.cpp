@@ -124,7 +124,6 @@ int main(int argc, char* argv[]) {
 	// }
 
 	/* 循环接受连接(支持多个客户端同时连接到服务端)，并获取客户端的信息 */
-	cout<<"service start"<<endl;
 	while (true) {
 		XTcp client = server.accept_connection();
 		/* 创建一个线程专门用于客户端与服务端之间收发数据 */
@@ -132,7 +131,6 @@ int main(int argc, char* argv[]) {
 		thread cur_thread(&TcpRSThread::Main, std::ref(cur_rs_thread));
 		cur_thread.detach();
 	}
-	cout<<"service end"<<endl;
 	server.close_socket();
 
 	return 0;

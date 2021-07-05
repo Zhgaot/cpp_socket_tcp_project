@@ -49,13 +49,14 @@ int XTcp::create_socket() {
 
 bool XTcp::name_socket(unsigned short port) {
 	/* 万一外部没有创建socket，在这里也创建上 */
-	this->create_socket();
+	if (this->sock == -1)
+		this->create_socket();
 
     /* 使用TCP/IP协议的<专用socket地址>来设置地址族、端口号、IP地址 */
 	sockaddr_in saddr;
 	saddr.sin_family = AF_INET;  // AF_INET是地址族，对应于IPv4网络协议中采用的协议族PF_INET
 	saddr.sin_port = htons(this->port);  // htons()函数将短整型的主机字节序数据转化为网络字节序数据，通常用于转换端口号
-	saddr.sin_addr.s_addr = inet_addr("172.17.102.97");  // 设置IPv4地址(要用网络字节序表示)，设置为0表示任意ip地址发过来的数据均可接收
+	saddr.sin_addr.s_addr = htons(0);  // 设置IPv4地址(要用网络字节序表示)，设置为0表示任意ip地址发过来的数据均可接收
 
 	/* 命名socket：即将一个socket与socket地址绑定 */
 	if (bind(this->sock, (sockaddr*)&saddr, sizeof(saddr)) != 0) {

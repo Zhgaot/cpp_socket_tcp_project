@@ -1,8 +1,8 @@
 {
     "version": "2.0.0",
-    "options": {
-        "cwd": "${workspaceFolder}/build"  // 要到哪里去执行cmake和make
-    },
+    // "options": {
+    //     "cwd": "${workspaceFolder}/build"  // 要到哪里去执行cmake和make
+    // },
     "tasks": [
         // {
         //     "type": "shell",
@@ -18,7 +18,10 @@
             "command": "cd ${workspaceRoot} && ./build.sh",
             "args": [
 
-            ]
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"  // 要到哪里去执行./build.sh
+            },
         },
         {
             "label": "make",
@@ -29,7 +32,10 @@
             },
             "args": [
 
-            ]
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build"  // 要到哪里去执行make
+            },
         },
         {
             "label": "Build",

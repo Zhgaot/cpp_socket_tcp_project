@@ -12,6 +12,7 @@ public:
   bool create_connection(const char *ip, unsigned short port); // 创建连接
   bool server_listen(const int listen_num); // 服务端开启监听
   BasicTcp accept_connection();             // 服务端接收连接
+  bool set_block(bool is_block);            // 对阻塞方式进行设置
   void close_socket();                      // 关闭socket连接
   int receive_msg(char *buf, int recv_size);
   int send_msg(const char *buf, int send_size);

@@ -7,6 +7,7 @@
 #define closesocket                                                            \
   close // Linux下关闭socket需要使用close，因此在Linux下将closesocket替换为close
 #include <arpa/inet.h>
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <string.h>
 #endif
@@ -159,6 +160,36 @@ BasicTcp BasicTcp::accept_connection() {
          << "The port of the client is" << temp_tcp.port << endl;
   }
   return temp_tcp;
+}
+
+bool BasicTcp::set_block(bool is_block) {
+  /* 设置阻塞的前提是socket文件描述符已经被创建 */
+  if (this->sock == -1)
+    return false;
+
+    /* 对阻塞进行设置 */
+#ifdef WIN32
+  unsigned long ul = 0; // 若此值为0，表明为阻塞模式，否则为非阻塞模式
+  if (!is_block) // 若用户希望当前设置成非阻塞模式
+    ul = 1;      // 则ul设置为1
+  ioctlsocket(this->sock, FIONBIO, &ul);
+#else
+  int flags = fcntl(this->sock, F_GETFL, 0);
+  if (flags < 0)
+    return false;
+  if (is_block) {
+    // O_NONBLOCK取反后：非阻塞这一位变成0，其余位全部变成1
+    // O_NONBLOCK再与flags进行与操作，则只有非阻塞这一位变成0，即变为阻塞模式
+    flags = flags & ~O_NONBLOCK;
+  } else {
+    // O_NONBLOCK的原来的值就是非阻塞这一位是1表明非阻塞，其余位均是0
+    // O_NONBLOCK与flags进行或操作，将非阻塞这一位变成1，即变为非阻塞模式
+    flags = flags | O_NONBLOCK;
+  }
+  if (fcntl(this->sock, F_SETFL, flags) != 0)
+    return false;
+  return true;
+#endif
 }
 
 void BasicTcp::close_socket() {

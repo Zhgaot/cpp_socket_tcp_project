@@ -14,13 +14,28 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 # 设置为debug版本以方便debug
 SET(CMAKE_BUILD_TYPE Debug)
 
-# 指定
+# 指定头文件的包含路径
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include)
+
+# 发现指定路径下的所有cc文件
+AUX_SOURCE_DIRECTORY(./src LIB_SRCS)
+
+# 指定库生成路径
+SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+
+# 生成链接库
+ADD_LIBRARY(basic_tcp SHARED ${LIB_SRCS})
 
 # 指定需要链接的库
 LINK_LIBRARIES(pthread)  # 由于pthread库的路径在默认搜索路径中，因此无需指定库路径
+LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/lib)
+LINK_LIBRARIES(basic_tcp)
+
+# 指定可执行文件的生成路径
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 
 # 生成可执行文件
-ADD_EXECUTABLE(mySocket_exe server.cpp src/XTcp.cpp)
+# ADD_EXECUTABLE(server_exe server.cc src/basic_tcp.cc)
+ADD_EXECUTABLE(server_exe server.cc)
 
-# target_link_libraries(mySocket_exe pthread)  # 库已在前面指定了
+# target_link_libraries(server_exe pthread)  # 库已在前面指定了

@@ -37,5 +37,6 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 # 生成可执行文件
 # ADD_EXECUTABLE(server_exe server.cc src/basic_tcp.cc)
 ADD_EXECUTABLE(server_exe server.cc)
+ADD_EXECUTABLE(client_exe client.cc)
 
 # target_link_libraries(server_exe pthread)  # 库已在前面指定了

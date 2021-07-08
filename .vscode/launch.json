@@ -8,7 +8,7 @@
             "name": "g++ - 生成和调试活动文件",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/mySocket_exe",
+            "program": "${workspaceFolder}/server_exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

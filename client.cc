@@ -14,4 +14,9 @@ int main(int argc, char *argv[]) {
   BasicTcp client;
   client.create_socket();
   client.create_connection(ip.c_str(), port);
+  client.send_msg("I am client.", 13);
+  char recv_buf[2014];
+  client.receive_msg(recv_buf, sizeof(recv_buf));
+  cout << recv_buf << endl;
+  return 0;
 }

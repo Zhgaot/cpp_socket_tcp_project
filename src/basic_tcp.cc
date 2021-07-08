@@ -123,7 +123,7 @@ bool BasicTcp::create_connection(const char *ip, unsigned short port) {
   /* 创建连接，若失败则打印错误码 */
   if (connect(sock, (sockaddr *)&saddr, sizeof(saddr)) != 0) {
     cout << "Failed to connect other side!\n"
-         << "ip: " << ip << "port: " << port << "\n"
+         << "ip: " << ip << ", port: " << port << "\n"
          << "error: " << strerror(errno) << endl;
     return false;
   }

@@ -1,0 +1,158 @@
+---
+# 语言: None, Cpp, Java, JavaScript, ObjC, Proto, TableGen, TextProto
+Language:	Cpp
+# 这份clang-format文件在Google style的风格上修改为Tencent style
+# BasedOnStyle:  Google
+# 标准: Cpp03, Cpp11, Auto  自动识别语言风格
+Standard:        Auto
+# 每行字符的限制，0表示没有限制
+ColumnLimit:     100
+# 访问说明符(public、private等)的偏移
+AccessModifierOffset: -1
+
+#### 头文件控制
+# 允许排序#include
+SortIncludes:   true
+# 按块排序
+IncludeBlocks:  Regroup
+# 对#include进行排序，匹配了某正则表达式的#include拥有对应的优先级，匹配不到的则默认优先级为INT_MAX(优先级越小排序越靠前)，
+# 可以定义负数优先级从而保证某些#include永远在最前面,具体写法参考https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+# 对代码规范中的其他库头文件的排序，是依靠穷举的方式进行的
+IncludeCategories: 
+  - Regex:	'<.*\.h[pp]?>'
+    Priority:        1
+    SortPriority:    1
+  - Regex:	'<[a-z,_]*>'
+    Priority:        2
+    SortPriority:    2
+  - Regex:	'^"attr_api|^"bon|^"curl|^"dmt_shm_queue|^"is_monitor_api|^"jaeger|^"libqos_client64|^"openssl|^"rapidjson|^"tcmalloc|^"yaml|^"agent_api|^"libev|^"proto|^"seclog|^"shmqueue'
+    Priority:        3
+    SortPriority:    3
+  - Regex:	'".*\.h[pp]?"'
+    Priority:        4
+    SortPriority:    4
+
+#### 括号,空格控制
+# 使用c++11的括号风格 if true: vector<int> x{ 1, 2, 3, 4 }; --> vector<int> x{1, 2, 3, 4};
+Cpp11BracedListStyle: true
+# 开括号(开圆括号、开尖括号、开方括号)后的对齐: Align, DontAlign, AlwaysBreak(总是在开括号后换行)
+AlignAfterOpenBracket:	AlwaysBreak
+# 在大括号前换行: Attach(始终将大括号附加到周围的上下文), Linux(除函数、命名空间和类定义，与Attach类似), 
+#   Mozilla(除枚举、函数、记录定义，与Attach类似), Stroustrup(除函数定义、catch、else，与Attach类似), 
+#   Allman(总是在大括号前换行), GNU(总是在大括号前换行，并对于控制语句的大括号增加额外的缩进), WebKit(在函数前换行), Custom
+#   注：这里认为语句块也属于函数
+BreakBeforeBraces: Attach
+# 开圆括号之前添加一个空格: Never, ControlStatements, Always
+SpaceBeforeParens:	ControlStatements
+# 在空的圆括号中添加空格
+SpaceInEmptyParentheses:	false
+# 在圆括号的(后和)前添加空格
+SpacesInParentheses:	false
+# 在方括号的[后和]前添加空格，lamda表达式和未指明大小的数组的声明不受影响
+SpacesInSquareBrackets:	true
+# 在尖括号的<后和>前添加空格
+SpacesInAngles:	false
+# 在C风格类型转换的括号中添加空格  if true: a=(int32)t; --> a=( int32 )t;
+SpacesInCStyleCastParentheses:	false
+# 在C风格类型转换后添加空格 if true: (int)i; --> (int) i;
+SpaceAfterCStyleCast:	false
+# 在赋值运算符之前添加空格 if true:  a+=42; --> a += 42
+SpaceBeforeAssignmentOperators:	true
+
+#### 缩进控制
+# 使用tab字符: Never(禁用Tab), ForIndentation, ForContinuationAndIndentation, Always
+UseTab:          Never
+# tab宽度
+# TabWidth:        8
+# 缩进宽度
+IndentWidth:	2
+# 当一句话太长时换行后的缩进长度
+ContinuationIndentWidth: 4
+# 缩进case标签
+IndentCaseLabels:	false
+# 命名空间的缩进: None, Inner(缩进嵌套的命名空间中的内容), All
+NamespaceIndentation: None
+# 函数返回类型或函数名过长导致换行时，是否对换行进行缩进
+IndentWrappedFunctionNames:	true
+
+#### 换行控制
+# 连续空行的最大数量
+MaxEmptyLinesToKeep: 1
+# 在二元运算符前换行
+BreakBeforeBinaryOperators: false
+# 在三元运算符前换行
+BreakBeforeTernaryOperators: false
+# 允许函数声明的所有参数在放在下一行
+AllowAllParametersOfDeclarationOnNextLine: true
+# 在构造函数的初始化列表的逗号前换行
+BreakConstructorInitializersBeforeComma: false
+# 构造函数的初始化列表要么都在同一行，要么都各自一行
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+# 允许短的块放在同一行
+AllowShortIfStatementsOnASingleLine: false
+# 允许短的case标签放在同一行
+AllowShortLoopsOnASingleLine: false
+# 允许短的函数放在同一行: None, InlineOnly(定义在类中), Empty(空函数), Inline(定义在类中，空函数), All
+AllowShortFunctionsOnASingleLine:	Empty
+# 允许短的if语句保持在同一行
+AllowShortIfStatementsOnASingleLine:	false
+# 允许短的循环保持在同一行
+AllowShortLoopsOnASingleLine:	false
+# 总是在定义返回类型后换行(deprecated)
+AlwaysBreakAfterDefinitionReturnType:	None
+# 总是在返回类型后换行: None, All, TopLevel(顶级函数，不包括在类中的函数),
+#   AllDefinitions(所有的定义，不包括声明), TopLevelDefinitions(所有的顶级函数的定义)
+AlwaysBreakAfterReturnType:	None
+# 总是在多行string字面量前换行
+AlwaysBreakBeforeMultilineStrings:	false
+# 总是在template声明后换行
+AlwaysBreakTemplateDeclarations:	false
+# 保留在块开始处的空行
+KeepEmptyLinesAtTheStartOfBlocks:	false
+
+#### 对齐
+# 对齐连续的尾随的注释
+AlignTrailingComments: false
+# 连续赋值时，对齐所有等号
+AlignConsecutiveAssignments:	false
+# 连续声明时，对齐所有声明的变量名
+AlignConsecutiveDeclarations:	false
+# 左对齐逃脱换行(使用反斜杠换行)的反斜杠
+AlignEscapedNewlinesLeft:	true
+# 水平对齐二元和三元表达式的操作数
+AlignOperands:	true
+# 指针和引用的对齐: Left, Right, Middle
+PointerAlignment:	Left
+
+#### 宏控制
+# 开始一个块的宏的正则表达式
+MacroBlockBegin:	''
+# 结束一个块的宏的正则表达式
+MacroBlockEnd:	''
+
+#### 注释控制
+# 允许重新排版注释
+ReflowComments:	true
+# 在尾随的评论前添加的空格数(只适用于//)
+SpacesBeforeTrailingComments:	2
+# 发现namespace结尾处没有注释时，将其补上
+# true
+# namespace a{
+# }  // namespace a
+FixNamespaceComments: true
+
+#### 代价
+# 在call(后对函数调用换行的penalty
+PenaltyBreakBeforeFirstCallParameter: 1
+# 在一个注释中引入换行的penalty
+PenaltyBreakComment: 60
+# 在一个字符串字面量中引入换行的penalty
+PenaltyBreakString: 1000
+PenaltyBreakFirstLessLess: 120
+# 对于每个在行字符数限制之外的字符的penalty
+PenaltyExcessCharacter: 1000000
+# 将函数的返回类型放到它自己的行的penalty
+PenaltyReturnTypeOnItsOwnLine: 200
+
+...
+

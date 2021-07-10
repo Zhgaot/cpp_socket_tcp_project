@@ -110,7 +110,8 @@ bool BasicTcp::server_listen(const int listen_num) {
   }
 }
 
-bool BasicTcp::create_connection(const char *ip, unsigned short port) {
+bool BasicTcp::create_connection(const char *ip, unsigned short port,
+                                 int timeout_ms) {
   /* 万一外部没有创建socket，在这里也创建上 */
   if (this->sock == -1)
     this->create_socket();
@@ -122,12 +123,24 @@ bool BasicTcp::create_connection(const char *ip, unsigned short port) {
   saddr.sin_addr.s_addr = inet_addr(ip);
 
   /* 创建连接，若失败则打印错误码 */
+  this->set_block(false); // 改成非阻塞模式，则下面的connect将立即返回
+  fd_set fdset; // 包含一个整型数组，其中每个元素的每一位标记一个文件描述符
   if (connect(sock, (sockaddr *)&saddr, sizeof(saddr)) != 0) {
-    cout << "Failed to connect other side!\n"
-         << "ip: " << ip << ", port: " << port << "\n"
-         << "error: " << strerror(errno) << endl;
-    return false;
+    FD_ZERO(&fdset);            // 清除fdset的所有位
+    FD_SET(this->sock, &fdset); // 设置fdset的位this->sock
+    timeval tm;
+    tm.tv_sec = 0;
+    tm.tv_usec = timeout_ms * 1000; // 微秒*1000=毫秒
+    if (select(this->sock + 1, 0, &fdset, 0, &tm) <= 0) {
+      cout << "Connect timeout or error!\n" // 超时或失败时select返回-1
+           << "Failed to connect other side!\n"
+           << "ip: " << ip << ", port: " << port << "\n"
+           << "error: " << strerror(errno) << endl;
+      this->set_block(true); // 连接失败，重设回阻塞模式
+      return false;
+    }
   }
+  this->set_block(true); // 连接成功，但后续要进行收发数据，因此设置回阻塞模式
   cout << "Connect success!" << endl;
   return true;
 }

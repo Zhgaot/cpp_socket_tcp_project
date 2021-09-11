@@ -2,10 +2,10 @@
 
 #include "basic_tcp.h"
 
-class TcpRecvSendThread
+class RecvSendThread
 {
 public:
-    TcpRecvSendThread(BasicTcp client);
+    RecvSendThread(BasicTcp client);
     void recv_send(bool reply);
 
 private:

@@ -15,8 +15,8 @@ public:
   BasicTcp accept_connection();                  // 服务端接收连接
   bool set_block(bool is_block);                 // 对阻塞方式进行设置
   void close_socket();                           // 关闭socket连接
-  int receive_msg(char *buf, int recv_size);
-  int send_msg(const char *buf, int send_size);
+  int receive_msg(char *buf, int recv_size);     // 接收消息
+  int send_msg(const char *buf, int send_size);  // 发送消息
   void byteorder(); // 用于检查机器字节序
 public:
   int sock; // 连接用的socket描述符(在构造函数中初始化)

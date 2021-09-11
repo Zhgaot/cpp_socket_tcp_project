@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/basic_tcp.h
+string
+-
+
+/root/CppSpace/cpp_socket_tcp_project/client.cc
+basic_tcp.h
+/root/CppSpace/cpp_socket_tcp_project/basic_tcp.h
+iostream
+-
+stdlib.h
+-
+string
+-
+

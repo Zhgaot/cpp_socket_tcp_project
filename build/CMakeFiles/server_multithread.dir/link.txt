@@ -1,0 +1,1 @@
+/usr/bin/g++   -Wall -std=c++11 -g  -rdynamic CMakeFiles/server_multithread.dir/server_multithread.cc.o  -o ../bin/server_multithread  -L/root/CppSpace/cpp_socket_tcp_project/lib -Wl,-rpath,/root/CppSpace/cpp_socket_tcp_project/lib -lpthread ../lib/libbasic_tcp.so 

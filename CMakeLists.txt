@@ -32,12 +32,12 @@ LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/lib)
 LINK_LIBRARIES(basic_tcp)
 
 # 指定可执行文件的生成路径
-SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 # 生成可执行文件
 # ADD_EXECUTABLE(server_exe server.cc src/basic_tcp.cc)
-ADD_EXECUTABLE(server_exe server.cc)
-ADD_EXECUTABLE(server_epoll_exe server_epoll.cc)
-ADD_EXECUTABLE(client_exe client.cc)
+ADD_EXECUTABLE(server_multithread server_multithread.cc)
+ADD_EXECUTABLE(server_epoll server_epoll.cc)
+ADD_EXECUTABLE(client client.cc)
 
 # target_link_libraries(server_exe pthread)  # 库已在前面指定了

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 rm -rf ./build
-rm -rf ./lib
-rm -rf ./server_exe
-rm -rf ./server_epoll_exe
-rm -rf ./client_exe
+# rm -rf ./lib
+# rm -rf ./server_multithread
+# rm -rf ./server_epoll
+# rm -rf ./client

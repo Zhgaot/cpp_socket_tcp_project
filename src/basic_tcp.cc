@@ -4,8 +4,7 @@
 #include <sys/socket.h>
 #include <sys/types.h> // Linux下编译需要导入的头文件
 #include <unistd.h>    // close函数需要导入的头文件
-#define closesocket                                                            \
-  close // Linux下关闭socket需要使用close，因此在Linux下将closesocket替换为close
+#define closesocket close // Linux下关闭socket需要使用close，因此在Linux下将closesocket替换为close
 #include <arpa/inet.h>
 #include <fcntl.h>
 #include <netinet/in.h>
@@ -22,7 +21,7 @@
 using namespace std;
 
 BasicTcp::BasicTcp() : sock(-1), port(0) {
-  /* 为了兼容windows下的使用，在XTcp类的构造函数内初始化动态链接库 */
+  /* 为了兼容windows下的使用，在BasicTcp类的构造函数内初始化动态链接库 */
 #ifdef WIN32                // 在Linux中无需初始化动态链接库
   static bool first = true; // 首次初始化为true，也就是需要进行初始化
   if (first == true) {
@@ -77,13 +76,15 @@ bool BasicTcp::name_socket() {
   /* 命名socket：即将一个socket与socket地址绑定 */
   if (bind(this->sock, (sockaddr *)&saddr, sizeof(saddr)) != 0) {
 #ifdef WIN32
-    cout << "name(bind) socket failed！The port that you want to bind is: "
-         << port << "；"
+    cout << "[" << __FILE__ << ":" << __LINE__ << "] " 
+         << "name(bind) socket failed！The port that you want to bind is: "
+         << port << "; "
          << "The reason for the failure is: " << GetLastError()
          << endl; // Windows下使用GetLastError()获得错误码
 #else
-    cout << "name(bind) socket failed！The port that you want to bind is: "
-         << port << "；"
+    cout << "[" << __FILE__ << ":" << __LINE__ << "] " 
+         << "name(bind) socket failed！The port that you want to bind is: "
+         << port << "; "
          << "The reason for the failure is: " << strerror(errno)
          << endl; // Linux下使用strerror解读errno来得知为何绑定失败
 #endif
@@ -132,7 +133,8 @@ bool BasicTcp::create_connection(const char *ip, unsigned short port,
     tm.tv_sec = 0;
     tm.tv_usec = timeout_ms * 1000; // 微秒*1000=毫秒
     if (select(this->sock + 1, 0, &fdset, 0, &tm) <= 0) {
-      cout << "Connect timeout or error!\n" // 超时或失败时select返回-1
+      cout << "[" << __FILE__ << ":" << __LINE__ << "]\n" 
+           << "Connect timeout or error!\n" // 超时或失败时select返回-1
            << "Failed to connect other side!\n"
            << "ip: " << ip << ", port: " << port << "\n"
            << "error: " << strerror(errno) << endl;
@@ -149,30 +151,29 @@ BasicTcp BasicTcp::accept_connection() {
   /**
    * @return 返回的是一个从server角度看到的client，它包含有socket、ip、port
    */
-  BasicTcp
-      temp_tcp; // 创建一个XTcp对象，无论最终是否accept成功，都将其返回，外部可以通过XTcp对象内的sock进行判断是否accept成功
+  BasicTcp server_client; // 创建一个XTcp对象，无论最终是否accept成功，都将其返回，外部可以通过XTcp对象内的sock进行判断是否accept成功
   sockaddr_in caddr; // 该socket地址用于存储客户端的信息
   socklen_t len = sizeof(caddr);
   int client_sock = accept(sock, (sockaddr *)&caddr, &len);
   // int client_sock = accept(sock, (sockaddr*)&caddr, sizeof(caddr));
   if (client_sock < 0) { // 接受客户端连接失败
-    cout
-        << "Failed to accept client connection，the reason for the failure is: "
-        << strerror(errno) << endl;
+    cout << "[" << __FILE__ << ":" << __LINE__ << "] " 
+         << "Failed to accept client connection，the reason for the failure is: "
+         << strerror(errno) << endl;
   } else { // 接受客户端连接成功
     char remote[INET_ADDRSTRLEN];
-    temp_tcp.sock = client_sock; // 将专门用于与客户端通信的socket描述符传入进去
-    temp_tcp.ip =
+    server_client.sock = client_sock; // 将专门用于与客户端通信的socket描述符传入进去
+    server_client.ip =
         inet_ntop(AF_INET, &caddr.sin_addr, remote,
-                  INET_ADDRSTRLEN); //《Linux高性能服务器编程》p74&79；另：const
-                                    // char* == std::string
-    temp_tcp.port = ntohs(
+                  INET_ADDRSTRLEN); //《Linux高性能服务器编程》: p74 & p79
+                                    // 另：const char* == std::string
+    server_client.port = ntohs(
         caddr.sin_port); // 获取端口号(unsigned short表明了端口号最多为65535)
     cout << "connection succeeded！\n"
-         << "The ip of the client is" << temp_tcp.ip
-         << "The port of the client is" << temp_tcp.port << endl;
+         << "The ip of the client is: " << server_client.ip << "\n"
+         << "The port of the client is: " << server_client.port << endl;
   }
-  return temp_tcp;
+  return server_client;
 }
 
 bool BasicTcp::set_block(bool is_block) {
@@ -180,7 +181,7 @@ bool BasicTcp::set_block(bool is_block) {
   if (this->sock == -1)
     return false;
 
-    /* 对阻塞进行设置 */
+  /* 对阻塞进行设置 */
 #ifdef WIN32
   unsigned long ul = 0; // 若此值为0，表明为阻塞模式，否则为非阻塞模式
   if (!is_block) // 若用户希望当前设置成非阻塞模式
@@ -229,7 +230,8 @@ int BasicTcp::send_msg(const char *buf, int send_size) {
                    0); // 当前发送的起点：buf +
                        // sended_size；当前需要发送的大小send_size - sended_size
     if (len <= 0) {
-      cout << "Failed to send data!" << endl;
+      cout << "[" << __FILE__ << ":" << __LINE__ << "] " 
+           << "Failed to send data!" << endl;
       break;
     }
     sended_size += len;

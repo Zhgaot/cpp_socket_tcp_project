@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/basic_tcp.h
+string
+-
+
+../include/reply.h
+basic_tcp.h
+../include/basic_tcp.h
+
+/root/CppSpace/cpp_socket_tcp_project/server_epoll.cc
+basic_tcp.h
+/root/CppSpace/cpp_socket_tcp_project/basic_tcp.h
+reply.h
+/root/CppSpace/cpp_socket_tcp_project/reply.h
+iostream
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+string
+-
+sys/epoll.h
+-
+thread
+-
+

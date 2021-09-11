@@ -1,0 +1,6 @@
+/root/CppSpace/cpp_socket_tcp_project/build/CMakeFiles/rebuild_cache.dir
+/root/CppSpace/cpp_socket_tcp_project/build/CMakeFiles/edit_cache.dir
+/root/CppSpace/cpp_socket_tcp_project/build/CMakeFiles/client.dir
+/root/CppSpace/cpp_socket_tcp_project/build/CMakeFiles/server_epoll.dir
+/root/CppSpace/cpp_socket_tcp_project/build/CMakeFiles/server_multithread.dir
+/root/CppSpace/cpp_socket_tcp_project/build/CMakeFiles/basic_tcp.dir

@@ -8,8 +8,16 @@
             "name": "g++ - 生成和调试活动文件",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/server_exe",
-            "args": [],
+            "program": "${workspaceFolder}/bin/server_multithread",
+            // "program": "${workspaceFolder}/server_exe",
+            // "program": "${workspaceFolder}/client_exe",
+            "args": [
+                "8081"
+            ],
+            // "args": [
+            //     "172.17.102.97",
+            //     "8080"
+            // ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],

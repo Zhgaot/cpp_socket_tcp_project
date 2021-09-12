@@ -1,5 +1,6 @@
 #include "basic_tcp.h"
 #include "reply.h"
+#include "thread_pool.hpp"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +8,14 @@
 #include <string>
 #include <sys/epoll.h> // 仅可在Linux中使用
 #include <thread>
+
+#define THREAD_POOL 1 // 是否使用线程池
+#if THREAD_POOL
+#define THREAD_NUM 3  // 线程池内线程数量
+#endif
+
 using namespace std;
+using namespace TP;
 
 int main(int argc, char *argv[]) {
   /**
@@ -23,6 +31,12 @@ int main(int argc, char *argv[]) {
     // atoi()函数将数字格式的字符串转换为整数类型，需引用头文件<stdlib.h>
     port = atoi(argv[1]);
   }
+
+#if THREAD_POOL
+  /* 创建线程池 */
+  ThreadPool thread_pool(THREAD_NUM);
+  thread_pool.init();
+#endif
 
   /* 开启server的一系列行动 */
   BasicTcp server(port);
@@ -65,7 +79,12 @@ int main(int argc, char *argv[]) {
         BasicTcp client;
         client.sock = events_out[i].data.fd;
         RecvSendThread* temp_reply = new RecvSendThread(client);
+#if THREAD_POOL
+        std::function<void(bool)> submit_func = std::bind(&RecvSendThread::recv_send, temp_reply, std::placeholders::_1);
+        thread_pool.submit(submit_func, false);
+#else
         temp_reply->recv_send(false);
+#endif
       }
     }
   }

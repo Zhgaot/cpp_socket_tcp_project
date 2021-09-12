@@ -1,1 +1,0 @@
-/usr/bin/g++   -Wall -std=c++11 -g  -rdynamic CMakeFiles/client.dir/client.cc.o  -o ../bin/client  -L/root/CppSpace/cpp_socket_tcp_project/lib -Wl,-rpath,/root/CppSpace/cpp_socket_tcp_project/lib -lpthread ../lib/libbasic_tcp.so 

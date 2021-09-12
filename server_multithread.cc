@@ -78,7 +78,9 @@ int main(int argc, char *argv[]) {
 #endif
   }
 
+#if THREAD_POOL
   thread_pool.shutdown();
+#endif
   server.close_socket();
 
   return 0;

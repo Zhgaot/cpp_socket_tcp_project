@@ -15,7 +15,11 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
 SET(CMAKE_BUILD_TYPE Debug)
 
 # 指定头文件的包含路径
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include)
+INCLUDE_DIRECTORIES(
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/third-lib
+    ${CMAKE_SOURCE_DIR}/third-lib/yaml-cpp
+)
 
 # 发现指定路径下的所有cc文件
 AUX_SOURCE_DIRECTORY(./src LIB_SRCS)
@@ -30,6 +34,8 @@ ADD_LIBRARY(basic_tcp SHARED ${LIB_SRCS})
 LINK_LIBRARIES(pthread)  # 由于pthread库的路径在默认搜索路径中，因此无需指定库路径
 LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/lib)
 LINK_LIBRARIES(basic_tcp)
+LINK_DIRECTORIES(${PROJECT_SOURCE_DIR}/third-lib/yaml-cpp/lib)
+LINK_LIBRARIES(yaml-cpp)
 
 # 指定可执行文件的生成路径
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
@@ -38,6 +44,7 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 # ADD_EXECUTABLE(server_exe server.cc src/basic_tcp.cc)
 ADD_EXECUTABLE(server_multithread server_multithread.cc)
 ADD_EXECUTABLE(server_epoll server_epoll.cc)
+ADD_EXECUTABLE(server_reactor server_reactor.cc)
 ADD_EXECUTABLE(client client.cc)
 
 # target_link_libraries(server_exe pthread)  # 库已在前面指定了

@@ -1,0 +1,7 @@
+multithread:
+    thread_pool:
+        use: true
+        quantity: 8
+    listen: 10
+    reply: false
+

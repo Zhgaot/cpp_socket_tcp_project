@@ -19,33 +19,12 @@ public:
     ThreadPool(ThreadPool&&) = delete;
     ThreadPool& operator=(const ThreadPool&) = delete;
     ThreadPool& operator=(ThreadPool&&) = delete;
+
     void init();
     void shutdown();
 
-    /* --------------- Definition --------------- */
     template <typename F, typename... Args>
-    auto submit(F &&pri_func, Args &&...args) -> std::future<decltype(pri_func(args...))> {
-        // Create a function with bounded parameter ready to execute
-        std::function<decltype(pri_func(args...))()> func = std::bind(std::forward<F>(pri_func), std::forward<Args>(args)...);
-
-        // Encapsulate it into a shared pointer in order to be able to copy construct
-        // auto == std::shared_ptr<std::packaged_task<decltype(f(args...))()>>
-        auto task_ptr = std::make_shared<std::packaged_task<decltype(pri_func(args...))()>>(func);
-
-        // Warp packaged task into void function
-        std::function<void()> warpper_func = [task_ptr]() {
-            (*task_ptr)();
-        };
-
-        // Push task into task queue
-        this->queue_.push(warpper_func);
-
-        // Wake up the first thread in the wait queue
-        this->condition_.notify_one();
-
-        return task_ptr->get_future();
-    }
-    /* --------------- Definition --------------- */
+    auto submit(F &&pri_func, Args &&...args) -> std::future<decltype(pri_func(args...))>;
 
 private:
     class ThreadWorker;
@@ -107,5 +86,29 @@ inline void ThreadPool::shutdown() {
         }
     }
 }
+
+template <typename F, typename... Args>
+auto ThreadPool::submit(F &&pri_func, Args &&...args) -> std::future<decltype(pri_func(args...))> {
+    // Create a function with bounded parameter ready to execute
+    std::function<decltype(pri_func(args...))()> func = std::bind(std::forward<F>(pri_func), std::forward<Args>(args)...);
+
+    // Encapsulate it into a shared pointer in order to be able to copy construct
+    // auto == std::shared_ptr<std::packaged_task<decltype(f(args...))()>>
+    auto task_ptr = std::make_shared<std::packaged_task<decltype(pri_func(args...))()>>(func);
+
+    // Warp packaged task into void function
+    std::function<void()> warpper_func = [task_ptr]() {
+        (*task_ptr)();
+    };
+
+    // Push task into task queue
+    this->queue_.push(warpper_func);
+
+    // Wake up the first thread in the wait queue
+    this->condition_.notify_one();
+
+    return task_ptr->get_future();
+}
+
 /* --------------- Definition --------------- */
 }

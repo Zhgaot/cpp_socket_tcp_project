@@ -17,16 +17,6 @@ int main(int argc, char *argv[]) {
   }
 
   /* 创建客户端，并建立连接 */
-  // for (int i = 0; i < 10000; ++i) {
-  //   BasicTcp client;
-  //   client.create_socket();
-  //   client.set_block(false);
-  //   client.create_connection(ip.c_str(), port, 3000);
-  //   client.send_msg("I am client.", 13);
-  //   char recv_buf[2014];
-  //   client.receive_msg(recv_buf, sizeof(recv_buf));
-  //   cout << recv_buf << endl;
-  // }
   BasicTcp client;
   client.create_socket();
   client.set_block(false);

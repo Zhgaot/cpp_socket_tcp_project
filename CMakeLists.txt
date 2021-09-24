@@ -44,7 +44,8 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 # ADD_EXECUTABLE(server_exe server.cc src/basic_tcp.cc)
 ADD_EXECUTABLE(server_multithread server_multithread.cc)
 ADD_EXECUTABLE(server_epoll server_epoll.cc)
-ADD_EXECUTABLE(server_reactor server_reactor.cc)
+ADD_EXECUTABLE(server_reactor_single server_reactor_single.cc)
+ADD_EXECUTABLE(server_reactor_multi server_reactor_multi.cc)
 ADD_EXECUTABLE(client client.cc)
 
 # target_link_libraries(server_exe pthread)  # 库已在前面指定了

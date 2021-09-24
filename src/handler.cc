@@ -33,13 +33,13 @@ void RecvSendThread::recv_send(bool reply) {
             char send_msg[1024];
             strcpy(send_msg, send_msg_input.c_str());
             int send_size = strlen(send_msg);
-            int sendlen = server_client_.send_msg(send_msg, send_size);
+            int send_len = server_client_.send_msg(send_msg, send_size);
         } else {
             string recv_msg_str(recv_buf);
             string send_msg_str = "[ECHO]: " + recv_msg_str;
             const char* send_msg = send_msg_str.c_str();
             int send_size = strlen(send_msg);
-            int sendlen = server_client_.send_msg(send_msg, send_size);
+            int send_len = server_client_.send_msg(send_msg, send_size);
             break;
         }
     }

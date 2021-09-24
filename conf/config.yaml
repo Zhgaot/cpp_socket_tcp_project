@@ -1,7 +1,49 @@
 multithread:
     thread_pool:
         use: true
+        quantity: 4
+    listen: 10
+    reply: false
+    default_port: 8080
+
+epoll:
+    thread_pool:
+        use: true
+        quantity: 4
+    listen: 10
+    reply: false
+    default_port: 8080
+    epoll_create_size: 256
+    epoll_listen_size: 20
+    epoll_timeout: 10
+    epoll_mode: "ET"
+
+reactor_single:
+    thread_pool:
         quantity: 8
     listen: 10
     reply: false
+    default_port: 8080
+    epoll_create_size: 256
+    epoll_listen_size: 20
+    epoll_timeout: 10
+    epoll_mode: "ET"
 
+reactor_multi:
+    thread_quantity: 4
+    listen: 10
+    reply: false
+    default_port: 8080
+    epoll_create_size: 256
+    epoll_listen_size: 20
+    epoll_timeout: 10
+    epoll_mode: "ET"
+
+client:
+    reply: true
+    sending_times: 5
+    sending_interval: 1000  # ms
+    default_port: 8080
+    connect_timeout: 3000  # ms
+    recv_buf_len: 1024
+    send_buf_len: 1024

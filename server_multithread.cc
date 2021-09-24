@@ -5,7 +5,6 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-// #include <stdint.h>
 #include <string.h>
 #include <string>
 #include <thread>
@@ -14,24 +13,26 @@
 using namespace std;
 using namespace TP;
 
+/* CONFIG */
 const bool THREAD_POOL 
   = Config::getInstance()->conf_msg["multithread"]["thread_pool"]["use"].as<bool>();
 const int THREAD_NUM 
   = Config::getInstance()->conf_msg["multithread"]["thread_pool"]["quantity"].as<int>();
-const bool REPLY
-  = Config::getInstance()->conf_msg["multithread"]["reply"].as<bool>();
 const int LISTEN_NUM
   = Config::getInstance()->conf_msg["multithread"]["listen"].as<int>();
+const bool REPLY
+  = Config::getInstance()->conf_msg["multithread"]["reply"].as<bool>();
+const unsigned short DEFAULT_PORT
+  = Config::getInstance()->conf_msg["reactor_single"]["default_port"].as<unsigned short>();
 
+/**
+ * @brief 主线程入口函数
+ * @param argc 传入参数的个数
+ * @param argv argv[0]:程序运行的全路径名; argc[1]:传入的参数(主要用于传入端口号)
+*/
 int main(int argc, char *argv[]) {
-  /**
-   * @brief 主函数
-   * @param argc 传入参数的个数
-   * @param argv
-   * 第0个参数为“程序运行的全路径名”，从第1个参数开始为传入的参数(主要用于传入端口号)
-   */
 
-  unsigned short port = 8080; // 默认端口号为8080
+  unsigned short port = DEFAULT_PORT; // 默认端口号为8080
   if (argc > 1) {
     port = atoi(
         argv[1]); // atoi()函数将数字格式的字符串转换为整数类型，需要引用头文件<stdlib.h>
@@ -57,7 +58,8 @@ int main(int argc, char *argv[]) {
         client); // 只有当前类是new出来的，才能在对象中使用delete this;释放空间
     bool REPLY = false;
 
-    /* // server端键盘输入是否需要手动回复client端
+#if 0
+    // server端键盘输入是否需要手动回复client端
     while (true) {
       cout << "Please select whether you need to manually keyboard reply to the "
               "information(y/n):";
@@ -74,11 +76,12 @@ int main(int argc, char *argv[]) {
         continue;
       }
     }
-    */
+#endif
 
     if (THREAD_POOL) {
       // 使用线程池
-      std::function<void(bool)> submit_func = std::bind(&RecvSendThread::recv_send, cur_rs_thread, std::placeholders::_1);
+      std::function<void(bool)> submit_func = std::bind(
+        &RecvSendThread::recv_send, cur_rs_thread, std::placeholders::_1);
       thread_pool.submit(submit_func, REPLY);
     } else {
       // 直接为每条Client连接创建线程进行处理
@@ -89,7 +92,7 @@ int main(int argc, char *argv[]) {
   }
 
   if (THREAD_POOL)
-    thread_pool.shutdown();
+    thread_pool.shutdown();  // 关闭线程池
   server.close_socket();
 
   return 0;

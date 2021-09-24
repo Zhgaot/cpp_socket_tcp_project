@@ -8,7 +8,7 @@
             "name": "g++ - 生成和调试活动文件",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/server_multithread",
+            "program": "${workspaceFolder}/bin/server_reactor_multi",
             // "program": "${workspaceFolder}/server_exe",
             // "program": "${workspaceFolder}/client_exe",
             "args": [

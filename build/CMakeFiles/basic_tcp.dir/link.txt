@@ -1,0 +1,1 @@
+/usr/bin/g++ -fPIC  -Wall -std=c++11 -g  -shared -Wl,-soname,libbasic_tcp.so -o ../lib/libbasic_tcp.so CMakeFiles/basic_tcp.dir/src/basic_tcp.cc.o CMakeFiles/basic_tcp.dir/src/handler.cc.o 

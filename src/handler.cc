@@ -17,8 +17,10 @@ void RecvSendThread::recv_send(bool reply) {
             cout << "An error occurred in the recv function!" << endl;
             break;
         }
-        else
+        else {
             recv_buf[recvlen] = '\0';
+            cout << "Client msg: " << recv_buf << endl;
+        }
         if (strstr(recv_buf, "quit") != nullptr || strstr(recv_buf, "exit") != nullptr) { // 当客户端需要退出时
             char send_msg[] = "quit success!\n";
             server_client_.send_msg(send_msg, sizeof(send_msg) + 1);
@@ -35,12 +37,19 @@ void RecvSendThread::recv_send(bool reply) {
             int send_size = strlen(send_msg);
             int send_len = server_client_.send_msg(send_msg, send_size);
         } else {
+            char send_msg[1024] = "[ECHO]: ";
+            memcpy(send_msg + 8, recv_buf, recvlen);
+            int send_size = 8 + recvlen;
+            int send_len = server_client_.send_msg(send_msg, send_size);
+            break;
+            /*  由于recv_buf结尾为'\0'，这里使用string是有bug的！会出现乱码
             string recv_msg_str(recv_buf);
             string send_msg_str = "[ECHO]: " + recv_msg_str;
             const char* send_msg = send_msg_str.c_str();
             int send_size = strlen(send_msg);
             int send_len = server_client_.send_msg(send_msg, send_size);
             break;
+            */
         }
     }
     server_client_.close_socket();

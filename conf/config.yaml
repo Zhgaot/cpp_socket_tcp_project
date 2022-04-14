@@ -1,6 +1,6 @@
 multithread:
     thread_pool:
-        use: true
+        use: false
         quantity: 4
     listen: 10
     reply: false
@@ -40,9 +40,9 @@ reactor_multi:
     epoll_mode: "ET"
 
 client:
-    reply: true
+    reply: false
     sending_times: 5
-    sending_interval: 1000  # ms
+    sending_interval: 100000  # μs; if reply == false
     default_port: 8080
     connect_timeout: 3000  # ms
     recv_buf_len: 1024

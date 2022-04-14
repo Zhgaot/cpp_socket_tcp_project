@@ -41,7 +41,7 @@ void RecvSendThread::recv_send(bool reply) {
             memcpy(send_msg + 8, recv_buf, recvlen);
             int send_size = 8 + recvlen;
             int send_len = server_client_.send_msg(send_msg, send_size);
-            break;
+            // break;
             /*  由于recv_buf结尾为'\0'，这里使用string是有bug的！会出现乱码
             string recv_msg_str(recv_buf);
             string send_msg_str = "[ECHO]: " + recv_msg_str;
